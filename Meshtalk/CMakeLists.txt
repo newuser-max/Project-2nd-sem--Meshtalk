@@ -16,6 +16,7 @@ qt_add_qml_module(appMeshtalk
     URI Meshtalk
     QML_FILES
         Main.qml
+        SOURCES compression.h compression.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
