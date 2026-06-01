@@ -64,7 +64,7 @@ Collaborators
 ```bash
 mkdir build && cd build
 cmake ..
-cmake --build .
+cmake --build . -j4
 ```
 
 Or open the project in Qt Creator and click Run.
