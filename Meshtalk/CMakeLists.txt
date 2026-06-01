@@ -16,6 +16,8 @@ qt_add_qml_module(appMeshtalk
     URI Meshtalk
     QML_FILES
         Main.qml
+        SOURCES backend.cpp
+        SOURCES backend.h
         SOURCES compression.h compression.cpp
 )
 
