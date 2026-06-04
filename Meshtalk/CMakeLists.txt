@@ -23,6 +23,7 @@ qt_add_qml_module(appMeshtalk
         SOURCES packet.h packet.cpp
         SOURCES packetqueue.h packetqueue.cpp
         SOURCES peermanager.h peermanager.cpp
+        SOURCES crypto.h crypto.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
