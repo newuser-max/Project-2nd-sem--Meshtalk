@@ -120,7 +120,7 @@ void Backend::announcePresence()
     p.receiver = "all";
     p.message  = m_myNickname;
     p.hopCount = 7;
-
+}
 
 void Backend::discoverPeer(const QString &nickname)
 {
