@@ -2,7 +2,6 @@
 #define COMPRESSION_H
 
 #include <QByteArray>
-#include <QString>
 
 // Compresses/decompresses is done using Qt's built-in zlib wrapper.
 // Small payloads are skipped automatically.
