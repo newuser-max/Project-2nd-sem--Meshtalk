@@ -101,7 +101,7 @@ void UdpTransport::onDataReceived()
             continue;
         }
         // Convert Base64 text back to compressed bytes
-        QByteArray compressedData =QByteArray::fromBase64(decryptedText.toLatin1());
+        QByteArray compressedData =QByteArray::fromBase64(plainmessage.toLatin1());
 
         // Decompress
         bool ok = false;
@@ -114,7 +114,6 @@ void UdpTransport::onDataReceived()
             continue;
         }
 
-        QString plainMessage =QString::fromUtf8(decompressedData);
 
         // Rebuild the packet from JSON + decrypted message
         Packet packet;
