@@ -1,5 +1,6 @@
 #include "transport.h"
 #include "crypto.h"
+#include"compression.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -34,6 +35,14 @@ void UdpTransport::startListening(quint16 port)
 
 void UdpTransport::sendPacket(const Packet &packet)
 {
+     // Convert message to bytes
+    QByteArray originalData = packet.message.toUtf8();
+
+    // Compress message
+    QByteArray compressedData = MessageCompressor::compress(originalData);
+
+    // Convert compressed binary to Base64 text
+    QString compressedText = QString::fromLatin1(compressedData.toBase64());
     // encrypt the message
     QByteArray iv;
     QByteArray tag;
@@ -91,6 +100,21 @@ void UdpTransport::onDataReceived()
             qDebug() << "[UDP] Dropped packet — decryption failed";
             continue;
         }
+        // Convert Base64 text back to compressed bytes
+        QByteArray compressedData =QByteArray::fromBase64(decryptedText.toLatin1());
+
+        // Decompress
+        bool ok = false;
+
+        QByteArray decompressedData =MessageCompressor::decompress(compressedData,&ok);
+
+        if (!ok)
+        {
+            qDebug()<< "[UDP] Decompression failed";
+            continue;
+        }
+
+        QString plainMessage =QString::fromUtf8(decompressedData);
 
         // Rebuild the packet from JSON + decrypted message
         Packet packet;
