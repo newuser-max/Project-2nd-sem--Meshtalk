@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QStringList>
 #include "peermanager.h"
-#include "udptransport.h"
+#include "transport.h"
 
 // Backend ties together the peer list, the network transport, and the
 // chat message log, and exposes all of it to QML.
