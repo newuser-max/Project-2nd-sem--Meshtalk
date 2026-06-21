@@ -101,7 +101,7 @@ void UdpTransport::onDataReceived()
             continue;
         }
         // Convert Base64 text back to compressed bytes
-        QByteArray compressedData =QByteArray::fromBase64(plainmessage.toLatin1());
+        QByteArray compressedData =QByteArray::fromBase64(plainMessage.toLatin1());
 
         // Decompress
         bool ok = false;
