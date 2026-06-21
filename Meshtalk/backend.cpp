@@ -3,7 +3,7 @@
 
 Backend::Backend(QObject *parent) : QObject(parent)
 {
-    // Whenever a UDP packet arrives, hand it to onPacketReceived
+
     connect(&m_transport, &UdpTransport::packetReceived,
             this, &Backend::onPacketReceived);
 
@@ -35,13 +35,13 @@ bool Backend::addPeerIfNew(const QString &nickname)
     return true;
 }
 
-// ── Getters ──
+
 
 QStringList Backend::messages() const { return m_messages; }
 QStringList Backend::peers()    const { return m_peers; }
 QString Backend::myNickname()   const { return m_myNickname; }
 
-// ── Functions callable from QML ──
+
 
 void Backend::setNickname(const QString &name)
 {
@@ -57,7 +57,7 @@ void Backend::setNickname(const QString &name)
     emit myNicknameChanged();
     qDebug() << "[BACKEND] Local peer created:" << m_myId << "/" << m_myNickname;
 
-    // Let others on the network discover us
+
     broadcastPresence();
 }
 
@@ -125,14 +125,14 @@ void Backend::onPacketReceived(const Packet &packet)
              << packet.sender << "to" << packet.receiver
              << "| type:" << packet.type;
 
-    // Ignore our own broadcasts
+
     if (packet.sender == m_myNickname)
         return;
 
     bool isNewPeer = addPeerIfNew(packet.sender);
 
     if (packet.type == "presence") {
-        // Reply so the new peer discovers us too
+
         if (isNewPeer)
             broadcastPresence();
         return;
