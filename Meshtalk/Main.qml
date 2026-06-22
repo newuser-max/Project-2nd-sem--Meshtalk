@@ -114,7 +114,7 @@ Window {
                     font.pixelSize: 11
                     font.family: "Georgia"
                     color: "#00D4FF"
-                    letterSpacing: 2
+                    font.letterSpacing: 2
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
