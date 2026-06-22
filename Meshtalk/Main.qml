@@ -107,18 +107,7 @@ Window {
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
-                Item { height: 6; width: 1 }
-
-                Text {
-                    text: "Chat with people nearby, no internet needed"
-                    font.pixelSize: 13
-                    font.family: "Georgia"
-                    color: "#9C8C80"
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    wrapMode: Text.WordWrap
-                    width: parent.width
-                }
+            
 
                 Item { height: 40; width: 1 }
 
