@@ -45,20 +45,56 @@ Window {
                 spacing: 0
                 width: 300
 
-                // Soft illustration circle
-                Rectangle {
-                    width: 80
-                    height: 80
-                    radius: 40
-                    color: "#E8E0D8"
-                    anchors.horizontalCenter: parent.horizontalCenter
+               Rectangle {
+    width: 80
+    height: 80
+    radius: 40
+    color: "#E8E0D8"
+    anchors.horizontalCenter: parent.horizontalCenter
 
-                    Text {
-                        anchors.centerIn: parent
-                        text: "💬"
-                        font.pixelSize: 36
-                    }
+   
+    Item {
+        anchors.centerIn: parent
+        width: 44
+        height: 40
+
+        Rectangle {
+            width: 44
+            height: 32
+            radius: 10
+            color: "#C4956A"
+            anchors.top: parent.top
+        }
+
+        
+        Rectangle {
+            width: 12
+            height: 12
+            radius: 3
+            color: "#C4956A"
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.leftMargin: 6
+        }
+
+       
+        Row {
+            anchors.centerIn: parent
+            anchors.verticalCenterOffset: -4
+            spacing: 5
+
+            Repeater {
+                model: 3
+                Rectangle {
+                    width: 5
+                    height: 5
+                    radius: 3
+                    color: "#FFFFFF"
                 }
+            }
+        }
+    }
+}
 
                 Item { height: 24; width: 1 }
 
