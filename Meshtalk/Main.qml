@@ -110,7 +110,7 @@ Window {
                 Item { height: 6; width: 1 }
 
                 Text {
-                    text: "encrypted · local · offline"
+                    text: "Chat freely.."
                     font.pixelSize: 11
                     font.family: "Georgia"
                     color: "#00D4FF"
