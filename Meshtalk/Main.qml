@@ -8,7 +8,7 @@ Window {
     height: 700
     visible: true
     title: "MeshTalk"
-    color: "#F5F0EB"
+    color: "#0A0F1E"
 
     property string selectedPeer: ""
 
@@ -38,63 +38,63 @@ Window {
         id: nicknameScreen
 
         Rectangle {
-            color: "#F5F0EB"
+            color: "#0A0F1E"
 
             Column {
                 anchors.centerIn: parent
                 spacing: 0
                 width: 300
 
-               Rectangle {
-    width: 80
-    height: 80
-    radius: 40
-    color: "#E8E0D8"
-    anchors.horizontalCenter: parent.horizontalCenter
-
-   
-    Item {
-        anchors.centerIn: parent
-        width: 44
-        height: 40
-
-        Rectangle {
-            width: 44
-            height: 32
-            radius: 10
-            color: "#C4956A"
-            anchors.top: parent.top
-        }
-
-        
-        Rectangle {
-            width: 12
-            height: 12
-            radius: 3
-            color: "#C4956A"
-            anchors.bottom: parent.bottom
-            anchors.left: parent.left
-            anchors.leftMargin: 6
-        }
-
-       
-        Row {
-            anchors.centerIn: parent
-            anchors.verticalCenterOffset: -4
-            spacing: 5
-
-            Repeater {
-                model: 3
+                // Logo icon
                 Rectangle {
-                    width: 5
-                    height: 5
-                    radius: 3
-                    color: "#FFFFFF"
+                    width: 80
+                    height: 80
+                    radius: 20
+                    color: "#111827"
+                    border.color: "#00D4FF"
+                    border.width: 1
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Item {
+                        anchors.centerIn: parent
+                        width: 44
+                        height: 40
+
+                        Rectangle {
+                            width: 44
+                            height: 32
+                            radius: 10
+                            color: "#00D4FF"
+                            anchors.top: parent.top
+                        }
+
+                        Rectangle {
+                            width: 12
+                            height: 12
+                            radius: 3
+                            color: "#00D4FF"
+                            anchors.bottom: parent.bottom
+                            anchors.left: parent.left
+                            anchors.leftMargin: 6
+                        }
+
+                        Row {
+                            anchors.centerIn: parent
+                            anchors.verticalCenterOffset: -4
+                            spacing: 5
+
+                            Repeater {
+                                model: 3
+                                Rectangle {
+                                    width: 5
+                                    height: 5
+                                    radius: 3
+                                    color: "#0A0F1E"
+                                }
+                            }
+                        }
+                    }
                 }
-            }
-        }
-    }
-}
 
                 Item { height: 24; width: 1 }
 
@@ -103,11 +103,20 @@ Window {
                     font.pixelSize: 32
                     font.bold: true
                     font.family: "Georgia"
-                    color: "#2C2420"
+                    color: "#FFFFFF"
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
-            
+                Item { height: 6; width: 1 }
+
+                Text {
+                    text: "encrypted · local · offline"
+                    font.pixelSize: 11
+                    font.family: "Georgia"
+                    color: "#00D4FF"
+                    letterSpacing: 2
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
 
                 Item { height: 40; width: 1 }
 
@@ -115,7 +124,7 @@ Window {
                     text: "What should we call you?"
                     font.pixelSize: 14
                     font.family: "Georgia"
-                    color: "#5C4C42"
+                    color: "#8892A4"
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
 
@@ -127,7 +136,7 @@ Window {
                     height: 52
                     font.pixelSize: 16
                     font.family: "Georgia"
-                    color: "#2C2420"
+                    color: "#FFFFFF"
                     placeholderText: "Your name…"
                     horizontalAlignment: TextInput.AlignHCenter
                     verticalAlignment: TextInput.AlignVCenter
@@ -152,9 +161,9 @@ Window {
                     }
 
                     background: Rectangle {
-                        radius: 14
-                        color: "#FFFFFF"
-                        border.color: nickInput.activeFocus ? "#C4956A" : "#DDD5CC"
+                        radius: 12
+                        color: "#111827"
+                        border.color: nickInput.activeFocus ? "#00D4FF" : "#1E2A3A"
                         border.width: nickInput.activeFocus ? 2 : 1
                         anchors.fill: parent
 
@@ -168,8 +177,10 @@ Window {
                 Rectangle {
                     width: 300
                     height: 52
-                    radius: 14
-                    color: nickInput.text.trim() !== "" ? "#C4956A" : "#E8E0D8"
+                    radius: 12
+                    color: nickInput.text.trim() !== "" ? "#00D4FF" : "#111827"
+                    border.color: nickInput.text.trim() !== "" ? "transparent" : "#1E2A3A"
+                    border.width: 1
 
                     Behavior on color { ColorAnimation { duration: 200 } }
 
@@ -179,7 +190,7 @@ Window {
                         font.pixelSize: 16
                         font.bold: true
                         font.family: "Georgia"
-                        color: nickInput.text.trim() !== "" ? "#FFFFFF" : "#BBA898"
+                        color: nickInput.text.trim() !== "" ? "#0A0F1E" : "#3D4F66"
                     }
 
                     MouseArea {
@@ -199,7 +210,7 @@ Window {
                     text: "Your name is only shared with nearby devices"
                     font.pixelSize: 11
                     font.family: "Georgia"
-                    color: "#BBA898"
+                    color: "#3D4F66"
                     anchors.horizontalCenter: parent.horizontalCenter
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
@@ -214,7 +225,7 @@ Window {
         id: chatScreen
 
         Rectangle {
-            color: "#F5F0EB"
+            color: "#0A0F1E"
 
             Timer {
                 interval: 1000
@@ -240,14 +251,13 @@ Window {
                 Rectangle {
                     Layout.fillWidth: true
                     height: 62
-                    color: "#FFFFFF"
+                    color: "#0D1421"
 
-                    // Bottom border
                     Rectangle {
                         anchors.bottom: parent.bottom
                         width: parent.width
                         height: 1
-                        color: "#EDE6DF"
+                        color: "#1E2A3A"
                     }
 
                     RowLayout {
@@ -259,8 +269,8 @@ Window {
                         Rectangle {
                             width: 36
                             height: 36
-                            radius: 18
-                            color: "#F0E6D8"
+                            radius: 10
+                            color: "#00D4FF"
 
                             Text {
                                 anchors.centerIn: parent
@@ -268,7 +278,7 @@ Window {
                                 font.pixelSize: 16
                                 font.bold: true
                                 font.family: "Georgia"
-                                color: "#C4956A"
+                                color: "#0A0F1E"
                             }
                         }
 
@@ -283,7 +293,7 @@ Window {
                                 font.pixelSize: 15
                                 font.bold: true
                                 font.family: "Georgia"
-                                color: "#2C2420"
+                                color: "#FFFFFF"
                             }
 
                             Text {
@@ -294,16 +304,16 @@ Window {
                                         : backend.peers.length + " people nearby"
                                 font.pixelSize: 11
                                 font.family: "Georgia"
-                                color: backend.peers.length > 0 ? "#7BAF7A" : "#BBA898"
+                                color: backend.peers.length > 0 ? "#00D4FF" : "#3D4F66"
                             }
                         }
 
                         Rectangle {
                             width: 72
                             height: 32
-                            radius: 10
-                            color: "#F5F0EB"
-                            border.color: "#DDD5CC"
+                            radius: 8
+                            color: "#111827"
+                            border.color: "#1E2A3A"
                             border.width: 1
 
                             Text {
@@ -311,7 +321,7 @@ Window {
                                 text: "People"
                                 font.pixelSize: 12
                                 font.family: "Georgia"
-                                color: "#7A6A60"
+                                color: "#8892A4"
                             }
 
                             MouseArea {
@@ -354,18 +364,15 @@ Window {
                             Rectangle {
                                 width: Math.min(msgText.implicitWidth + 28, messageList.width - 80)
                                 height: msgText.implicitHeight + 20
-                                radius: isMine ? 18 : 18
-                                color: isMine ? "#C4956A" : "#FFFFFF"
+                                radius: 14
+                                color: isMine ? "#00D4FF" : "#111827"
+                                border.color: isMine ? "transparent" : "#1E2A3A"
+                                border.width: isMine ? 0 : 1
                                 anchors.right: isMine ? parent.right : undefined
-
-                                // Subtle shadow
-                                layer.enabled: true
-                                layer.effect: null
 
                                 Text {
                                     id: msgText
                                     text: {
-                                        // Strip "You → Name: " prefix for cleaner look
                                         var t = modelData
                                         if (t.indexOf(": ") !== -1) {
                                             return t.substring(t.indexOf(": ") + 2)
@@ -374,14 +381,13 @@ Window {
                                     }
                                     font.pixelSize: 14
                                     font.family: "Georgia"
-                                    color: isMine ? "#FFFFFF" : "#2C2420"
+                                    color: isMine ? "#0A0F1E" : "#E2E8F0"
                                     wrapMode: Text.Wrap
                                     width: Math.min(implicitWidth, messageList.width - 108)
                                     anchors.centerIn: parent
                                 }
                             }
 
-                            // Sender label
                             Text {
                                 text: {
                                     var t = modelData
@@ -394,7 +400,7 @@ Window {
                                 }
                                 font.pixelSize: 10
                                 font.family: "Georgia"
-                                color: "#BBA898"
+                                color: "#3D4F66"
                                 anchors.right: isMine ? parent.right : undefined
                                 visible: text !== ""
                             }
@@ -410,27 +416,26 @@ Window {
 
                     Text {
                         anchors.centerIn: parent
-                        text: "Say hello to someone nearby ✨"
+                        text: "Say hi!"
                         font.pixelSize: 13
                         font.family: "Georgia"
-                        color: "#C4B5A8"
+                        color: "#3D4F66"
                     }
                 }
 
                 // Input bar
                 Rectangle {
                     Layout.fillWidth: true
-                    color: "#FFFFFF"
+                    color: "#0D1421"
                     height: Math.min(Math.max(msgInput.implicitHeight + 32, 72), 160)
 
                     Behavior on height { NumberAnimation { duration: 100 } }
 
-                    // Top border
                     Rectangle {
                         anchors.top: parent.top
                         width: parent.width
                         height: 1
-                        color: "#EDE6DF"
+                        color: "#1E2A3A"
                     }
 
                     RowLayout {
@@ -443,9 +448,9 @@ Window {
                             id: peerSelectorBtn
                             width: 96
                             height: 46
-                            radius: 12
-                            color: toInput.text !== "" ? "#FEF5EC" : "#F5F0EB"
-                            border.color: toInput.text !== "" ? "#C4956A" : "#DDD5CC"
+                            radius: 10
+                            color: toInput.text !== "" ? "#0A1F2E" : "#111827"
+                            border.color: toInput.text !== "" ? "#00D4FF" : "#1E2A3A"
                             border.width: 1
 
                             Behavior on color { ColorAnimation { duration: 150 } }
@@ -466,7 +471,7 @@ Window {
                                     font.pixelSize: 13
                                     font.family: "Georgia"
                                     font.bold: toInput.text !== ""
-                                    color: toInput.text !== "" ? "#C4956A" : "#9C8C80"
+                                    color: toInput.text !== "" ? "#00D4FF" : "#3D4F66"
                                     elide: Text.ElideRight
                                     width: 80
                                     horizontalAlignment: Text.AlignHCenter
@@ -476,7 +481,7 @@ Window {
                                     anchors.horizontalCenter: parent.horizontalCenter
                                     text: "▾"
                                     font.pixelSize: 9
-                                    color: toInput.text !== "" ? "#C4956A" : "#BBA898"
+                                    color: toInput.text !== "" ? "#00D4FF" : "#3D4F66"
                                 }
                             }
 
@@ -495,20 +500,10 @@ Window {
                                 closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
                                 background: Rectangle {
-                                    color: "#FFFFFF"
-                                    border.color: "#EDE6DF"
+                                    color: "#111827"
+                                    border.color: "#1E2A3A"
                                     border.width: 1
-                                    radius: 14
-
-                                    // Drop shadow effect via layered rectangle
-                                    Rectangle {
-                                        anchors.fill: parent
-                                        radius: 14
-                                        color: "transparent"
-                                        border.color: "#00000010"
-                                        border.width: 3
-                                        z: -1
-                                    }
+                                    radius: 12
                                 }
 
                                 contentItem: Column {
@@ -518,7 +513,7 @@ Window {
                                         text: "Send to…"
                                         font.pixelSize: 11
                                         font.family: "Georgia"
-                                        color: "#BBA898"
+                                        color: "#3D4F66"
                                         leftPadding: 10
                                         topPadding: 4
                                         bottomPadding: 2
@@ -528,8 +523,8 @@ Window {
                                     Rectangle {
                                         width: 168
                                         height: 42
-                                        radius: 10
-                                        color: allArea.containsMouse ? "#FEF5EC" : "transparent"
+                                        radius: 8
+                                        color: allArea.containsMouse ? "#0A1F2E" : "transparent"
 
                                         Behavior on color { ColorAnimation { duration: 80 } }
 
@@ -539,8 +534,8 @@ Window {
                                             spacing: 10
 
                                             Rectangle {
-                                                width: 28; height: 28; radius: 14
-                                                color: "#F0E6D8"
+                                                width: 28; height: 28; radius: 8
+                                                color: "#00D4FF"
 
                                                 Text {
                                                     anchors.centerIn: parent
@@ -558,14 +553,14 @@ Window {
                                                     font.pixelSize: 13
                                                     font.bold: true
                                                     font.family: "Georgia"
-                                                    color: "#2C2420"
+                                                    color: "#FFFFFF"
                                                 }
 
                                                 Text {
                                                     text: "broadcast"
                                                     font.pixelSize: 10
                                                     font.family: "Georgia"
-                                                    color: "#BBA898"
+                                                    color: "#3D4F66"
                                                 }
                                             }
                                         }
@@ -583,7 +578,7 @@ Window {
                                     }
 
                                     Rectangle {
-                                        width: 150; height: 1; color: "#EDE6DF"; x: 9
+                                        width: 150; height: 1; color: "#1E2A3A"; x: 9
                                         visible: backend.peers.length > 0
                                     }
 
@@ -593,8 +588,8 @@ Window {
                                         Rectangle {
                                             width: 168
                                             height: 42
-                                            radius: 10
-                                            color: peerItemArea.containsMouse ? "#FEF5EC" : "transparent"
+                                            radius: 8
+                                            color: peerItemArea.containsMouse ? "#0A1F2E" : "transparent"
 
                                             Behavior on color { ColorAnimation { duration: 80 } }
 
@@ -604,8 +599,10 @@ Window {
                                                 spacing: 10
 
                                                 Rectangle {
-                                                    width: 28; height: 28; radius: 14
-                                                    color: "#E8F5E8"
+                                                    width: 28; height: 28; radius: 8
+                                                    color: "#0A2A1A"
+                                                    border.color: "#00D4FF"
+                                                    border.width: 1
 
                                                     Text {
                                                         anchors.centerIn: parent
@@ -613,7 +610,7 @@ Window {
                                                         font.pixelSize: 13
                                                         font.bold: true
                                                         font.family: "Georgia"
-                                                        color: "#5A9A5A"
+                                                        color: "#00D4FF"
                                                     }
                                                 }
 
@@ -621,7 +618,7 @@ Window {
                                                     text: modelData
                                                     font.pixelSize: 13
                                                     font.family: "Georgia"
-                                                    color: "#2C2420"
+                                                    color: "#E2E8F0"
                                                     Layout.fillWidth: true
                                                     elide: Text.ElideRight
                                                 }
@@ -649,7 +646,7 @@ Window {
                                             text: "Nobody nearby yet"
                                             font.pixelSize: 12
                                             font.family: "Georgia"
-                                            color: "#C4B5A8"
+                                            color: "#3D4F66"
                                         }
                                     }
                                 }
@@ -660,9 +657,9 @@ Window {
                         Rectangle {
                             Layout.fillWidth: true
                             height: Math.min(Math.max(msgInput.implicitHeight + 16, 46), 130)
-                            radius: 12
-                            color: "#F5F0EB"
-                            border.color: msgInput.activeFocus ? "#C4956A" : "#DDD5CC"
+                            radius: 10
+                            color: "#111827"
+                            border.color: msgInput.activeFocus ? "#00D4FF" : "#1E2A3A"
                             border.width: msgInput.activeFocus ? 2 : 1
 
                             Behavior on height { NumberAnimation { duration: 100 } }
@@ -680,7 +677,7 @@ Window {
                                     width: parent.width
                                     font.pixelSize: 15
                                     font.family: "Georgia"
-                                    color: "#2C2420"
+                                    color: "#E2E8F0"
                                     leftPadding: 10
                                     rightPadding: 10
                                     topPadding: 8
@@ -708,8 +705,10 @@ Window {
                         Rectangle {
                             width: 46
                             height: 46
-                            radius: 12
-                            color: (toInput.text !== "" && msgInput.text !== "") ? "#C4956A" : "#EDE6DF"
+                            radius: 10
+                            color: (toInput.text !== "" && msgInput.text !== "") ? "#00D4FF" : "#111827"
+                            border.color: (toInput.text !== "" && msgInput.text !== "") ? "transparent" : "#1E2A3A"
+                            border.width: 1
 
                             Behavior on color { ColorAnimation { duration: 150 } }
 
@@ -718,7 +717,7 @@ Window {
                                 text: "↑"
                                 font.pixelSize: 20
                                 font.bold: true
-                                color: (toInput.text !== "" && msgInput.text !== "") ? "#FFFFFF" : "#C4B5A8"
+                                color: (toInput.text !== "" && msgInput.text !== "") ? "#0A0F1E" : "#3D4F66"
                             }
 
                             MouseArea {
@@ -742,7 +741,7 @@ Window {
         id: peersScreen
 
         Rectangle {
-            color: "#F5F0EB"
+            color: "#0A0F1E"
 
             ColumnLayout {
                 anchors.fill: parent
@@ -751,13 +750,13 @@ Window {
                 Rectangle {
                     Layout.fillWidth: true
                     height: 62
-                    color: "#FFFFFF"
+                    color: "#0D1421"
 
                     Rectangle {
                         anchors.bottom: parent.bottom
                         width: parent.width
                         height: 1
-                        color: "#EDE6DF"
+                        color: "#1E2A3A"
                     }
 
                     RowLayout {
@@ -766,15 +765,15 @@ Window {
                         anchors.rightMargin: 18
 
                         Rectangle {
-                            width: 36; height: 36; radius: 10
-                            color: "#F5F0EB"
-                            border.color: "#DDD5CC"; border.width: 1
+                            width: 36; height: 36; radius: 8
+                            color: "#111827"
+                            border.color: "#1E2A3A"; border.width: 1
 
                             Text {
                                 anchors.centerIn: parent
                                 text: "←"
                                 font.pixelSize: 16
-                                color: "#7A6A60"
+                                color: "#8892A4"
                             }
 
                             MouseArea {
@@ -791,13 +790,15 @@ Window {
                             font.pixelSize: 17
                             font.bold: true
                             font.family: "Georgia"
-                            color: "#2C2420"
+                            color: "#FFFFFF"
                             Layout.fillWidth: true
                         }
 
                         Rectangle {
-                            width: 28; height: 28; radius: 14
-                            color: backend.peers.length > 0 ? "#E8F5E8" : "#F0EBE6"
+                            width: 28; height: 28; radius: 8
+                            color: backend.peers.length > 0 ? "#00D4FF" : "#111827"
+                            border.color: backend.peers.length > 0 ? "transparent" : "#1E2A3A"
+                            border.width: 1
 
                             Text {
                                 anchors.centerIn: parent
@@ -805,7 +806,7 @@ Window {
                                 font.pixelSize: 12
                                 font.bold: true
                                 font.family: "Georgia"
-                                color: backend.peers.length > 0 ? "#5A9A5A" : "#BBA898"
+                                color: backend.peers.length > 0 ? "#0A0F1E" : "#3D4F66"
                             }
                         }
                     }
@@ -832,7 +833,7 @@ Window {
                             font.pixelSize: 18
                             font.bold: true
                             font.family: "Georgia"
-                            color: "#5C4C42"
+                            color: "#FFFFFF"
                             anchors.horizontalCenter: parent.horizontalCenter
                         }
 
@@ -840,7 +841,7 @@ Window {
                             text: "When someone else opens MeshTalk\non the same network, they'll show up here."
                             font.pixelSize: 13
                             font.family: "Georgia"
-                            color: "#9C8C80"
+                            color: "#3D4F66"
                             anchors.horizontalCenter: parent.horizontalCenter
                             horizontalAlignment: Text.AlignHCenter
                         }
@@ -853,7 +854,7 @@ Window {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     clip: true
-                    spacing: 1
+                    spacing: 6
                     topMargin: 10
                     model: backend.peers
 
@@ -861,12 +862,13 @@ Window {
                         width: parent.width - 24
                         x: 12
                         height: 70
-                        radius: 14
-                        color: peerArea.containsMouse ? "#FFFFFF" : "#FDFAF7"
-                        border.color: "#EDE6DF"
+                        radius: 12
+                        color: peerArea.containsMouse ? "#111827" : "#0D1421"
+                        border.color: peerArea.containsMouse ? "#00D4FF" : "#1E2A3A"
                         border.width: 1
 
                         Behavior on color { ColorAnimation { duration: 100 } }
+                        Behavior on border.color { ColorAnimation { duration: 100 } }
 
                         RowLayout {
                             anchors.fill: parent
@@ -875,8 +877,8 @@ Window {
 
                             // Avatar
                             Rectangle {
-                                width: 42; height: 42; radius: 21
-                                color: "#F0E6D8"
+                                width: 42; height: 42; radius: 10
+                                color: "#00D4FF"
 
                                 Text {
                                     anchors.centerIn: parent
@@ -884,7 +886,7 @@ Window {
                                     font.pixelSize: 18
                                     font.bold: true
                                     font.family: "Georgia"
-                                    color: "#C4956A"
+                                    color: "#0A0F1E"
                                 }
                             }
 
@@ -897,7 +899,7 @@ Window {
                                     font.pixelSize: 15
                                     font.bold: true
                                     font.family: "Georgia"
-                                    color: "#2C2420"
+                                    color: "#FFFFFF"
                                 }
 
                                 Row {
@@ -905,7 +907,7 @@ Window {
 
                                     Rectangle {
                                         width: 7; height: 7; radius: 4
-                                        color: "#7BAF7A"
+                                        color: "#00D4FF"
                                         anchors.verticalCenter: parent.verticalCenter
                                     }
 
@@ -913,14 +915,14 @@ Window {
                                         text: "Online nearby"
                                         font.pixelSize: 11
                                         font.family: "Georgia"
-                                        color: "#9C8C80"
+                                        color: "#3D4F66"
                                     }
                                 }
                             }
 
                             Rectangle {
-                                width: 68; height: 34; radius: 10
-                                color: "#C4956A"
+                                width: 68; height: 34; radius: 8
+                                color: "#00D4FF"
 
                                 Text {
                                     anchors.centerIn: parent
@@ -928,7 +930,7 @@ Window {
                                     font.pixelSize: 13
                                     font.bold: true
                                     font.family: "Georgia"
-                                    color: "#FFFFFF"
+                                    color: "#0A0F1E"
                                 }
                             }
                         }
