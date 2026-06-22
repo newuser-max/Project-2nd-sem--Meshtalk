@@ -71,7 +71,7 @@ Or open the project in Qt Creator and click Run.
 
 ---
 
-##Usage
+## Usage
 
 -Launch the app on two or more devices on the same or nearby physical space
 -Enter a nickname — this starts BLE advertising and scanning immediately
