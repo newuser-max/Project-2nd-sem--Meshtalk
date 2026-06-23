@@ -837,14 +837,7 @@ Window {
                             anchors.horizontalCenter: parent.horizontalCenter
                         }
 
-                        Text {
-                            text: "When someone else opens MeshTalk\non the same network, they'll show up here."
-                            font.pixelSize: 13
-                            font.family: "Georgia"
-                            color: "#3D4F66"
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            horizontalAlignment: Text.AlignHCenter
-                        }
+                      
                     }
                 }
 
