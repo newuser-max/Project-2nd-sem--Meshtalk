@@ -46,7 +46,7 @@ void UdpTransport::sendPacket(const Packet &packet)
     // encrypt the message
     QByteArray iv;
     QByteArray tag;
-    QByteArray cipherText = Crypto::encrypt(packet.message, iv, tag);
+    QByteArray cipherText = Crypto::encrypt(compressedData, iv, tag);
 
     if (cipherText.isEmpty()) {
         qDebug() << "[UDP] Encryption failed";
