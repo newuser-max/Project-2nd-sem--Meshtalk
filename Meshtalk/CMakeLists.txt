@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
+
 project(MeshTalk VERSION 0.1 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Quick Network)
+
 qt_standard_project_setup(REQUIRES 6.10)
 
 qt_add_executable(appMeshTalk
@@ -33,25 +34,21 @@ set_target_properties(appMeshTalk PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
+# OpenSSL — Mac uses system OpenSSL, Android uses prebuilt from KDAB
 if(ANDROID)
-    set(OPENSSL_ROOT_DIR ~/Qt/android_openssl/ssl_3/${ANDROID_ABI})
-    set(OPENSSL_INCLUDE_DIR ~/Qt/android_openssl/ssl_3/include)
-    include(~/Qt/android_openssl/android_openssl.cmake)
+    set(ANDROID_OPENSSL_DIR "C:/Users/dahal/Qt/android_openssl")
+
+    include("${ANDROID_OPENSSL_DIR}/android_openssl.cmake")
+
+    target_include_directories(appMeshTalk PRIVATE
+        "${ANDROID_OPENSSL_DIR}/ssl_3/include"
+    )
+
     target_link_libraries(appMeshTalk
         PRIVATE Qt6::Quick Qt6::Network
     )
+
     add_android_openssl_libraries(appMeshTalk)
-
-elseif(MINGW)
-    include_directories("C:/msys64/mingw64/include")
-    target_link_libraries(appMeshTalk
-        PRIVATE Qt6::Quick Qt6::Network
-        "C:/msys64/mingw64/lib/libssl.a"
-        "C:/msys64/mingw64/lib/libcrypto.a"
-        -lcrypt32
-        -lws2_32
-    )
-
 else()
     include_directories("C:/Program Files/OpenSSL-Win64/include")
     target_link_libraries(appMeshTalk
