@@ -10,11 +10,11 @@ const QByteArray Crypto::SHARED_KEY = QByteArray::fromHex(
     "000000000000000000000000000000"       // padded to 32 bytes
     );
 
-QByteArray Crypto::encrypt(const QString &plainText,
+QByteArray Crypto::encrypt(const QByteArray &plainData,
                            QByteArray &iv,
                            QByteArray &tag)
 {
-    QByteArray plainBytes = plainText.toUtf8();
+    QByteArray plainBytes = plainData;
 
     // Generate random 12-byte IV
     iv.resize(12);
@@ -80,16 +80,16 @@ QByteArray Crypto::encrypt(const QString &plainText,
     return cipherText;
 }
 
-QString Crypto::decrypt(const QByteArray &cipherText,
-                        const QByteArray &iv,
-                        const QByteArray &tag)
+QByteArray Crypto::decrypt(const QByteArray &cipherText,
+                           const QByteArray &iv,
+                           const QByteArray &tag)
 {
     QByteArray plainText(cipherText.size(), 0);
 
     EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new();
     if (!ctx) {
         qDebug() << "[CRYPTO] Failed to create cipher context";
-        return QString();
+        return QByteArray();
     }
 
     int len = 0;
@@ -132,9 +132,9 @@ QString Crypto::decrypt(const QByteArray &cipherText,
 
     if (finalResult != 1) {
         qDebug() << "[CRYPTO] Decryption FAILED — message tampered or wrong key";
-        return QString();  // empty string = reject this message
+        return QByteArray();  // empty array = reject this message
     }
 
     qDebug() << "[CRYPTO] Decrypted successfully";
-    return QString::fromUtf8(plainText);
+    return plainText;
 }

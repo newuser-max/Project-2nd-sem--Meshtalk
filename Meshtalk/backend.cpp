@@ -1,5 +1,6 @@
 #include "backend.h"
 #include <QDebug>
+#include <QDateTime>
 
 Backend::Backend(QObject *parent) : QObject(parent)
 {
@@ -26,6 +27,10 @@ void Backend::broadcastPresence()
 
 bool Backend::addPeerIfNew(const QString &nickname)
 {
+    // Refresh the last-seen timestamp every time we hear from this peer,
+    // whether they're new or already known.
+    m_lastSeen[nickname] = QDateTime::currentMSecsSinceEpoch();
+
     if (m_peers.contains(nickname))
         return false;
 
@@ -33,6 +38,27 @@ bool Backend::addPeerIfNew(const QString &nickname)
     emit peersChanged();
     qDebug() << "[BACKEND] Discovered peer:" << nickname;
     return true;
+}
+
+void Backend::pruneStalePeers()
+{
+    const qint64 now = QDateTime::currentMSecsSinceEpoch();
+    const qint64 timeoutMs = 20000; // 20 sec — should be well above the broadcast interval
+
+    bool changed = false;
+    for (int i = m_peers.size() - 1; i >= 0; --i) {
+        const QString &nick = m_peers.at(i);
+        qint64 last = m_lastSeen.value(nick, 0);
+        if (now - last > timeoutMs) {
+            qDebug() << "[BACKEND] Peer timed out:" << nick;
+            m_peers.removeAt(i);
+            m_lastSeen.remove(nick);
+            changed = true;
+        }
+    }
+
+    if (changed)
+        emit peersChanged();
 }
 
 

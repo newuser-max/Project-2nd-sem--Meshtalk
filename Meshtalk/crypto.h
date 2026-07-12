@@ -12,17 +12,17 @@ public:
     // 32 bytes = 256 bits = AES-256
     static const QByteArray SHARED_KEY;
 
-    // Encrypts plain text message
+    // Encrypts raw plain data (may be arbitrary binary, e.g. compressed bytes)
     // Returns encrypted bytes, and fills iv and tag
-    static QByteArray encrypt(const QString &plainText,
+    static QByteArray encrypt(const QByteArray &plainData,
                               QByteArray &iv,
                               QByteArray &tag);
 
     // Decrypts encrypted bytes using iv and tag
-    // Returns plain text message, or empty string if decryption fails
-    static QString decrypt(const QByteArray &cipherText,
-                           const QByteArray &iv,
-                           const QByteArray &tag);
+    // Returns raw plain data, or an empty array if decryption fails
+    static QByteArray decrypt(const QByteArray &cipherText,
+                              const QByteArray &iv,
+                              const QByteArray &tag);
 };
 
 #endif // CRYPTO_H

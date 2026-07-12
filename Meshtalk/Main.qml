@@ -12,6 +12,15 @@ Window {
 
     property string selectedPeer: ""
 
+    FontLoader {
+        id: silkscreenRegular
+        source: "fonts/Silkscreen-Regular.ttf"
+    }
+    FontLoader {
+        id: silkscreenBold
+        source: "fonts/Silkscreen-Bold.ttf"
+    }
+
     StackView {
         id: stack
         anchors.fill: parent
@@ -46,54 +55,12 @@ Window {
                 width: 300
 
                 // Logo icon
-                Rectangle {
+                Image {
                     width: 80
                     height: 80
-                    radius: 20
-                    color: "#111827"
-                    border.color: "#00D4FF"
-                    border.width: 1
                     anchors.horizontalCenter: parent.horizontalCenter
-
-                    Item {
-                        anchors.centerIn: parent
-                        width: 44
-                        height: 40
-
-                        Rectangle {
-                            width: 44
-                            height: 32
-                            radius: 10
-                            color: "#00D4FF"
-                            anchors.top: parent.top
-                        }
-
-                        Rectangle {
-                            width: 12
-                            height: 12
-                            radius: 3
-                            color: "#00D4FF"
-                            anchors.bottom: parent.bottom
-                            anchors.left: parent.left
-                            anchors.leftMargin: 6
-                        }
-
-                        Row {
-                            anchors.centerIn: parent
-                            anchors.verticalCenterOffset: -4
-                            spacing: 5
-
-                            Repeater {
-                                model: 3
-                                Rectangle {
-                                    width: 5
-                                    height: 5
-                                    radius: 3
-                                    color: "#0A0F1E"
-                                }
-                            }
-                        }
-                    }
+                    source: "images/chat.png"
+                    fillMode: Image.PreserveAspectFit
                 }
 
                 Item { height: 24; width: 1 }
@@ -102,7 +69,7 @@ Window {
                     text: "MeshTalk"
                     font.pixelSize: 32
                     font.bold: true
-                    font.family: "Georgia"
+                    font.family: silkscreenBold.name
                     color: "#FFFFFF"
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -112,7 +79,7 @@ Window {
                 Text {
                     text: "Chat freely.."
                     font.pixelSize: 11
-                    font.family: "Georgia"
+                    font.family: silkscreenRegular.name
                     color: "#00D4FF"
                     font.letterSpacing: 2
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -123,7 +90,7 @@ Window {
                 Text {
                     text: "What should we call you?"
                     font.pixelSize: 14
-                    font.family: "Georgia"
+                    font.family: silkscreenRegular.name
                     color: "#8892A4"
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -135,11 +102,12 @@ Window {
                     width: 300
                     height: 52
                     font.pixelSize: 16
-                    font.family: "Georgia"
+                    font.family: silkscreenRegular.name
                     color: "#FFFFFF"
                     placeholderText: "Your name…"
                     horizontalAlignment: TextInput.AlignHCenter
                     verticalAlignment: TextInput.AlignVCenter
+                    inputMethodHints: Qt.ImhNoPredictiveText
 
                     onTextChanged: {
                         var pos = cursorPosition
@@ -189,7 +157,7 @@ Window {
                         text: "Let's go →"
                         font.pixelSize: 16
                         font.bold: true
-                        font.family: "Georgia"
+                        font.family: silkscreenBold.name
                         color: nickInput.text.trim() !== "" ? "#0A0F1E" : "#3D4F66"
                     }
 
@@ -209,7 +177,7 @@ Window {
                 Text {
                     text: "Your name is only shared with nearby devices"
                     font.pixelSize: 11
-                    font.family: "Georgia"
+                    font.family: silkscreenRegular.name
                     color: "#3D4F66"
                     anchors.horizontalCenter: parent.horizontalCenter
                     horizontalAlignment: Text.AlignHCenter
@@ -240,6 +208,30 @@ Window {
                     if (root.selectedPeer !== "") {
                         toInput.text = root.selectedPeer
                     }
+                }
+            }
+
+            // Keyboard Up/Down cycles the recipient. Disabled while actively
+            // typing so it doesn't hijack cursor movement inside the message box.
+            Shortcut {
+                sequence: "Up"
+                enabled: !msgInput.activeFocus
+                onActivated: {
+                    var list = ["All"].concat(backend.peers)
+                    var idx = list.indexOf(toInput.text)
+                    if (idx === -1) idx = 0
+                    idx = (idx - 1 + list.length) % list.length
+                    toInput.text = list[idx]
+                }
+            }
+            Shortcut {
+                sequence: "Down"
+                enabled: !msgInput.activeFocus
+                onActivated: {
+                    var list = ["All"].concat(backend.peers)
+                    var idx = list.indexOf(toInput.text)
+                    idx = (idx + 1 + list.length) % list.length
+                    toInput.text = list[idx]
                 }
             }
 
@@ -277,7 +269,7 @@ Window {
                                 text: backend.myNickname.charAt(0).toUpperCase()
                                 font.pixelSize: 16
                                 font.bold: true
-                                font.family: "Georgia"
+                                font.family: silkscreenBold.name
                                 color: "#0A0F1E"
                             }
                         }
@@ -292,7 +284,7 @@ Window {
                                 text: backend.myNickname
                                 font.pixelSize: 15
                                 font.bold: true
-                                font.family: "Georgia"
+                                font.family: silkscreenBold.name
                                 color: "#FFFFFF"
                             }
 
@@ -303,7 +295,7 @@ Window {
                                         ? "1 person nearby"
                                         : backend.peers.length + " people nearby"
                                 font.pixelSize: 11
-                                font.family: "Georgia"
+                                font.family: silkscreenRegular.name
                                 color: backend.peers.length > 0 ? "#00D4FF" : "#3D4F66"
                             }
                         }
@@ -320,7 +312,7 @@ Window {
                                 anchors.centerIn: parent
                                 text: "People"
                                 font.pixelSize: 12
-                                font.family: "Georgia"
+                                font.family: silkscreenRegular.name
                                 color: "#8892A4"
                             }
 
@@ -380,7 +372,7 @@ Window {
                                         return t
                                     }
                                     font.pixelSize: 14
-                                    font.family: "Georgia"
+                                    font.family: silkscreenRegular.name
                                     color: isMine ? "#0A0F1E" : "#E2E8F0"
                                     wrapMode: Text.Wrap
                                     width: Math.min(implicitWidth, messageList.width - 108)
@@ -398,9 +390,10 @@ Window {
                                     if (t.indexOf(": ") !== -1) return t.substring(0, t.indexOf(":"))
                                     return ""
                                 }
-                                font.pixelSize: 10
-                                font.family: "Georgia"
-                                color: "#3D4F66"
+                                font.pixelSize: 12
+                                font.family: silkscreenRegular.name
+                                font.letterSpacing: 0.5
+                                color: "#6B7A94"
                                 anchors.right: isMine ? parent.right : undefined
                                 visible: text !== ""
                             }
@@ -418,7 +411,7 @@ Window {
                         anchors.centerIn: parent
                         text: "Say hi!"
                         font.pixelSize: 13
-                        font.family: "Georgia"
+                        font.family: silkscreenRegular.name
                         color: "#3D4F66"
                     }
                 }
@@ -446,7 +439,7 @@ Window {
                         // Peer selector
                         Rectangle {
                             id: peerSelectorBtn
-                            width: 96
+                            width: 92
                             height: 46
                             radius: 10
                             color: toInput.text !== "" ? "#0A1F2E" : "#111827"
@@ -469,19 +462,12 @@ Window {
                                     anchors.horizontalCenter: parent.horizontalCenter
                                     text: toInput.text !== "" ? toInput.text : "To"
                                     font.pixelSize: 13
-                                    font.family: "Georgia"
+                                    font.family: silkscreenRegular.name
                                     font.bold: toInput.text !== ""
                                     color: toInput.text !== "" ? "#00D4FF" : "#3D4F66"
                                     elide: Text.ElideRight
                                     width: 80
                                     horizontalAlignment: Text.AlignHCenter
-                                }
-
-                                Text {
-                                    anchors.horizontalCenter: parent.horizontalCenter
-                                    text: "▾"
-                                    font.pixelSize: 9
-                                    color: toInput.text !== "" ? "#00D4FF" : "#3D4F66"
                                 }
                             }
 
@@ -512,7 +498,7 @@ Window {
                                     Text {
                                         text: "Send to…"
                                         font.pixelSize: 11
-                                        font.family: "Georgia"
+                                        font.family: silkscreenRegular.name
                                         color: "#3D4F66"
                                         leftPadding: 10
                                         topPadding: 4
@@ -537,10 +523,12 @@ Window {
                                                 width: 28; height: 28; radius: 8
                                                 color: "#00D4FF"
 
-                                                Text {
-                                                    anchors.centerIn: parent
-                                                    text: "📢"
-                                                    font.pixelSize: 14
+                                                Image {
+                                                    width: 28
+                                                    height: 28
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    source: "images/megaphone.png"
+                                                    fillMode: Image.PreserveAspectFit
                                                 }
                                             }
 
@@ -552,14 +540,14 @@ Window {
                                                     text: "Everyone"
                                                     font.pixelSize: 13
                                                     font.bold: true
-                                                    font.family: "Georgia"
+                                                    font.family: silkscreenBold.name
                                                     color: "#FFFFFF"
                                                 }
 
                                                 Text {
                                                     text: "broadcast"
                                                     font.pixelSize: 10
-                                                    font.family: "Georgia"
+                                                    font.family: silkscreenRegular.name
                                                     color: "#3D4F66"
                                                 }
                                             }
@@ -609,7 +597,7 @@ Window {
                                                         text: modelData.charAt(0).toUpperCase()
                                                         font.pixelSize: 13
                                                         font.bold: true
-                                                        font.family: "Georgia"
+                                                        font.family: silkscreenBold.name
                                                         color: "#00D4FF"
                                                     }
                                                 }
@@ -617,7 +605,7 @@ Window {
                                                 Text {
                                                     text: modelData
                                                     font.pixelSize: 13
-                                                    font.family: "Georgia"
+                                                    font.family: silkscreenRegular.name
                                                     color: "#E2E8F0"
                                                     Layout.fillWidth: true
                                                     elide: Text.ElideRight
@@ -645,7 +633,7 @@ Window {
                                             anchors.centerIn: parent
                                             text: "Nobody nearby yet"
                                             font.pixelSize: 12
-                                            font.family: "Georgia"
+                                            font.family: silkscreenRegular.name
                                             color: "#3D4F66"
                                         }
                                     }
@@ -676,7 +664,7 @@ Window {
                                     id: msgInput
                                     width: parent.width
                                     font.pixelSize: 15
-                                    font.family: "Georgia"
+                                    font.family: silkscreenRegular.name
                                     color: "#E2E8F0"
                                     leftPadding: 10
                                     rightPadding: 10
@@ -691,7 +679,13 @@ Window {
                                         if (event.modifiers & Qt.ShiftModifier) {
                                             event.accepted = false
                                         } else {
-                                            if (toInput.text.trim() === "" || msgInput.text.trim() === "") return
+                                            // ── CHANGED: auto-open dropdown if no recipient selected ──
+                                            if (toInput.text.trim() === "") {
+                                                peerPopup.open()
+                                                event.accepted = true
+                                                return
+                                            }
+                                            if (msgInput.text.trim() === "") return
                                             backend.sendMessage(toInput.text.trim(), msgInput.text.trim())
                                             msgInput.text = ""
                                             event.accepted = true
@@ -724,7 +718,12 @@ Window {
                                 anchors.fill: parent
                                 cursorShape: (toInput.text !== "" && msgInput.text !== "") ? Qt.PointingHandCursor : Qt.ArrowCursor
                                 onClicked: {
-                                    if (toInput.text.trim() === "" || msgInput.text.trim() === "") return
+                                    // ── CHANGED: auto-open dropdown if no recipient selected ──
+                                    if (toInput.text.trim() === "") {
+                                        peerPopup.open()
+                                        return
+                                    }
+                                    if (msgInput.text.trim() === "") return
                                     backend.sendMessage(toInput.text.trim(), msgInput.text.trim())
                                     msgInput.text = ""
                                 }
@@ -789,7 +788,7 @@ Window {
                             text: "People Nearby"
                             font.pixelSize: 17
                             font.bold: true
-                            font.family: "Georgia"
+                            font.family: silkscreenBold.name
                             color: "#FFFFFF"
                             Layout.fillWidth: true
                         }
@@ -805,7 +804,7 @@ Window {
                                 text: backend.peers.length
                                 font.pixelSize: 12
                                 font.bold: true
-                                font.family: "Georgia"
+                                font.family: silkscreenBold.name
                                 color: backend.peers.length > 0 ? "#0A0F1E" : "#3D4F66"
                             }
                         }
@@ -822,22 +821,24 @@ Window {
                         anchors.centerIn: parent
                         spacing: 14
 
-                        Text {
-                            text: "🔍"
-                            font.pixelSize: 48
+                        Image {
+                            width: 80
+                            height: 80
                             anchors.horizontalCenter: parent.horizontalCenter
+                            source: "images/smiley.png"
+                            fillMode: Image.PreserveAspectFit
                         }
 
                         Text {
                             text: "Nobody nearby yet"
                             font.pixelSize: 18
                             font.bold: true
-                            font.family: "Georgia"
+                            font.family: silkscreenBold.name
                             color: "#FFFFFF"
                             anchors.horizontalCenter: parent.horizontalCenter
                         }
 
-                      
+
                     }
                 }
 
@@ -878,7 +879,7 @@ Window {
                                     text: modelData.charAt(0).toUpperCase()
                                     font.pixelSize: 18
                                     font.bold: true
-                                    font.family: "Georgia"
+                                    font.family: silkscreenBold.name
                                     color: "#0A0F1E"
                                 }
                             }
@@ -891,7 +892,7 @@ Window {
                                     text: modelData
                                     font.pixelSize: 15
                                     font.bold: true
-                                    font.family: "Georgia"
+                                    font.family: silkscreenBold.name
                                     color: "#FFFFFF"
                                 }
 
@@ -907,7 +908,7 @@ Window {
                                     Text {
                                         text: "Online nearby"
                                         font.pixelSize: 11
-                                        font.family: "Georgia"
+                                        font.family: silkscreenRegular.name
                                         color: "#3D4F66"
                                     }
                                 }
@@ -922,7 +923,7 @@ Window {
                                     text: "Chat"
                                     font.pixelSize: 13
                                     font.bold: true
-                                    font.family: "Georgia"
+                                    font.family: silkscreenBold.name
                                     color: "#0A0F1E"
                                 }
                             }

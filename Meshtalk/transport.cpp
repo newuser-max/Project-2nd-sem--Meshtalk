@@ -35,18 +35,17 @@ void UdpTransport::startListening(quint16 port)
 
 void UdpTransport::sendPacket(const Packet &packet)
 {
-     // Convert message to bytes
+    // Convert message to bytes
     QByteArray originalData = packet.message.toUtf8();
 
     // Compress message
     QByteArray compressedData = MessageCompressor::compress(originalData);
 
-    // Convert compressed binary to Base64 text
-    QString compressedText = QString::fromLatin1(compressedData.toBase64());
-    // encrypt the message
+    // encrypt the compressed bytes directly (no base64 detour needed —
+    // encrypt() now takes raw QByteArray)
     QByteArray iv;
     QByteArray tag;
-    QByteArray cipherText = Crypto::encrypt(packet.message, iv, tag);
+    QByteArray cipherText = Crypto::encrypt(compressedData, iv, tag);
 
     if (cipherText.isEmpty()) {
         qDebug() << "[UDP] Encryption failed";
@@ -94,19 +93,17 @@ void UdpTransport::onDataReceived()
         QByteArray iv         = QByteArray::fromBase64(obj["iv"].toString().toUtf8());
         QByteArray tag        = QByteArray::fromBase64(obj["tag"].toString().toUtf8());
 
-        QString plainMessage = Crypto::decrypt(cipherText, iv, tag);
-        if (plainMessage.isEmpty())
+        QByteArray compressedData = Crypto::decrypt(cipherText, iv, tag);
+        if (compressedData.isEmpty())
         {
             qDebug() << "[UDP] Dropped packet — decryption failed";
             continue;
         }
-        // Convert Base64 text back to compressed bytes
-        QByteArray compressedData =QByteArray::fromBase64(plainMessage.toLatin1());
 
         // Decompress
         bool ok = false;
 
-        QByteArray decompressedData =MessageCompressor::decompress(compressedData,&ok);
+        QByteArray decompressedData = MessageCompressor::decompress(compressedData, &ok);
 
         if (!ok)
         {
@@ -115,12 +112,12 @@ void UdpTransport::onDataReceived()
         }
 
 
-        // Rebuild the packet from JSON + decrypted message
+        // Rebuild the packet from JSON + decrypted, decompressed message
         Packet packet;
         packet.id        = obj["id"].toInt();
         packet.sender    = obj["sender"].toString();
         packet.receiver  = obj["receiver"].toString();
-        packet.message   = plainMessage;
+        packet.message   = QString::fromUtf8(decompressedData);
         packet.hopCount  = obj["hopCount"].toInt();
         packet.type      = obj["type"].toString("message");
         packet.timestamp = QDateTime::fromString(obj["timestamp"].toString(), Qt::ISODate);
