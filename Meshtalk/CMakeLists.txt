@@ -27,6 +27,9 @@ qt_add_qml_module(appMeshTalk
     RESOURCES
         fonts/Silkscreen-Regular.ttf
         fonts/Silkscreen-Bold.ttf
+        images/chat.png
+        images/megaphone.png
+        images/smiley.png
 )
 
 set_target_properties(appMeshTalk PROPERTIES
