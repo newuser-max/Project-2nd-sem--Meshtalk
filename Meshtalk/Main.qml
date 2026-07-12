@@ -477,12 +477,7 @@ Window {
                                     horizontalAlignment: Text.AlignHCenter
                                 }
 
-                                Text {
-                                    anchors.horizontalCenter: parent.horizontalCenter
-                                    text: "▾"
-                                    font.pixelSize: 9
-                                    color: toInput.text !== "" ? "#00D4FF" : "#3D4F66"
-                                }
+
                             }
 
                             MouseArea {
@@ -691,7 +686,13 @@ Window {
                                         if (event.modifiers & Qt.ShiftModifier) {
                                             event.accepted = false
                                         } else {
-                                            if (toInput.text.trim() === "" || msgInput.text.trim() === "") return
+                                            // ── CHANGED: auto-open dropdown if no recipient selected ──
+                                            if (toInput.text.trim() === "") {
+                                                peerPopup.open()
+                                                event.accepted = true
+                                                return
+                                            }
+                                            if (msgInput.text.trim() === "") return
                                             backend.sendMessage(toInput.text.trim(), msgInput.text.trim())
                                             msgInput.text = ""
                                             event.accepted = true
@@ -724,7 +725,12 @@ Window {
                                 anchors.fill: parent
                                 cursorShape: (toInput.text !== "" && msgInput.text !== "") ? Qt.PointingHandCursor : Qt.ArrowCursor
                                 onClicked: {
-                                    if (toInput.text.trim() === "" || msgInput.text.trim() === "") return
+                                    // ── CHANGED: auto-open dropdown if no recipient selected ──
+                                    if (toInput.text.trim() === "") {
+                                        peerPopup.open()
+                                        return
+                                    }
+                                    if (msgInput.text.trim() === "") return
                                     backend.sendMessage(toInput.text.trim(), msgInput.text.trim())
                                     msgInput.text = ""
                                 }
