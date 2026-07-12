@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
         &app,
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
-    engine.loadFromModule("Meshtalk", "Main");
+    engine.loadFromModule("MeshTalk", "Main");
 
     return QGuiApplication::exec();
 }

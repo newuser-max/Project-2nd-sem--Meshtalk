@@ -24,6 +24,9 @@ qt_add_qml_module(appMeshTalk
         transport.h transport.cpp
         crypto.h crypto.cpp
         compression.h compression.cpp
+    RESOURCES
+        fonts/Silkscreen-Regular.ttf
+        fonts/Silkscreen-Bold.ttf
 )
 
 set_target_properties(appMeshTalk PROPERTIES
@@ -43,11 +46,11 @@ if(ANDROID)
     add_android_openssl_libraries(appMeshTalk)
 
 elseif(MINGW)
-    include_directories("C:/msys64/mingw64/include")
+    include_directories("C:/Program Files/OpenSSL-Win64/include")
     target_link_libraries(appMeshTalk
         PRIVATE Qt6::Quick Qt6::Network
-        "C:/msys64/mingw64/lib/libssl.a"
-        "C:/msys64/mingw64/lib/libcrypto.a"
+        "C:/Program Files/OpenSSL-Win64/lib/VC/x64/MD/libssl.lib"
+        "C:/Program Files/OpenSSL-Win64/lib/VC/x64/MD/libcrypto.lib"
         -lcrypt32
         -lws2_32
     )
