@@ -19,7 +19,7 @@ Collaborators
 
 ## Features
 
--  **Automatic peer discovery over Bluetooth** — scans for nearby devices running MeshTalk 
+-  **Automatic peer discovery over Wi-Fi** — scans for nearby devices running MeshTalk 
 -  **End-to-end AES-256-GCM encryption** — every message is encrypted before leaving your device; a 16-byte GCM tag detects any tampering (OpenSSL)
 -  **Mesh routing with hop-count limiting** — messages hop device-to-device ; TTL = 7 prevents infinite loops
 -  **Broadcast and direct messaging** — send to one peer by nickname or broadcast to all reachable devices at once
@@ -42,7 +42,7 @@ Collaborators
 |------------|-----------------------------------|
 | UI         | Qt6 QML                           |
 | Backend    | C++ / Qt6                         |
-| Networking | Qt qdp|
+| Networking | Qt udp|
 | Build      | CMake 3.16+                       |
 
 
@@ -71,7 +71,7 @@ Or open the project in Qt Creator and click Run.
 ## Usage
 
 -Launch the app on two or more devices on the same or nearby physical space
--Enter a nickname — this starts qdp advertising and scanning immediately
+-Enter a nickname, this starts qdp advertising and scanning immediately
 -Devices discover each other automatically within seconds
 -Send a message to a specific nickname or broadcast to All
 -Messages relay through intermediate nodes automatically if devices are out of direct range
