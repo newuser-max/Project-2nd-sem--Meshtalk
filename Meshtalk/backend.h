@@ -3,8 +3,6 @@
 
 #include <QObject>
 #include <QStringList>
-#include <QMap>
-#include <QDateTime>
 #include "peermanager.h"
 #include "transport.h"
 
@@ -30,8 +28,6 @@ public:
     Q_INVOKABLE void checkInbox();
     Q_INVOKABLE void addSimulatedPeer(const QString &peerId, const QString &nick);
     Q_INVOKABLE void connectPeers(const QString &idA, const QString &idB);
-    Q_INVOKABLE void broadcastPresence();
-    Q_INVOKABLE void pruneStalePeers();
 
 signals:
     void messagesChanged();
@@ -47,11 +43,11 @@ private:
     UdpTransport m_transport;
     QStringList m_messages;
     QStringList m_peers;
-    QMap<QString, qint64> m_lastSeen; // nickname -> last-seen timestamp (ms since epoch)
     QString m_myId;
     QString m_myNickname;
 
     void appendMessage(const QString &line);
+    void broadcastPresence();
 
     // Adds a nickname to m_peers if we haven't seen it before.
     // Returns true if it was actually new.
