@@ -24,6 +24,9 @@ qt_add_qml_module(appMeshTalk
         transport.h transport.cpp
         crypto.h crypto.cpp
         compression.h compression.cpp
+    RESOURCES
+        fonts/Silkscreen-Regular.ttf
+        fonts/Silkscreen-Bold.ttf
 )
 
 set_target_properties(appMeshTalk PROPERTIES
