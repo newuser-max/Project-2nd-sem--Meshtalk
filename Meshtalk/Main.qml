@@ -253,6 +253,30 @@ Window {
                 }
             }
 
+            // Keyboard Up/Down cycles the recipient. Disabled while actively
+            // typing so it doesn't hijack cursor movement inside the message box.
+            Shortcut {
+                sequence: "Up"
+                enabled: !msgInput.activeFocus
+                onActivated: {
+                    var list = ["All"].concat(backend.peers)
+                    var idx = list.indexOf(toInput.text)
+                    if (idx === -1) idx = 0
+                    idx = (idx - 1 + list.length) % list.length
+                    toInput.text = list[idx]
+                }
+            }
+            Shortcut {
+                sequence: "Down"
+                enabled: !msgInput.activeFocus
+                onActivated: {
+                    var list = ["All"].concat(backend.peers)
+                    var idx = list.indexOf(toInput.text)
+                    idx = (idx + 1 + list.length) % list.length
+                    toInput.text = list[idx]
+                }
+            }
+
             ColumnLayout {
                 anchors.fill: parent
                 spacing: 0
@@ -408,9 +432,10 @@ Window {
                                     if (t.indexOf(": ") !== -1) return t.substring(0, t.indexOf(":"))
                                     return ""
                                 }
-                                font.pixelSize: 10
+                                font.pixelSize: 12
                                 font.family: silkscreenRegular.name
-                                color: "#3D4F66"
+                                font.letterSpacing: 0.5
+                                color: "#6B7A94"
                                 anchors.right: isMine ? parent.right : undefined
                                 visible: text !== ""
                             }
@@ -456,7 +481,7 @@ Window {
                         // Peer selector
                         Rectangle {
                             id: peerSelectorBtn
-                            width: 96
+                            width: 92
                             height: 46
                             radius: 10
                             color: toInput.text !== "" ? "#0A1F2E" : "#111827"
@@ -486,8 +511,6 @@ Window {
                                     width: 80
                                     horizontalAlignment: Text.AlignHCenter
                                 }
-
-
                             }
 
                             MouseArea {
