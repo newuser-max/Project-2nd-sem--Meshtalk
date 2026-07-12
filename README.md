@@ -23,8 +23,7 @@ Collaborators
 -  **End-to-end AES-256-GCM encryption** — every message is encrypted before leaving your device; a 16-byte GCM tag detects any tampering (OpenSSL)
 -  **Mesh routing with hop-count limiting** — messages hop device-to-device ; TTL = 7 prevents infinite loops
 -  **Broadcast and direct messaging** — send to one peer by nickname or broadcast to all reachable devices at once
--  **Works on wifi 
-
+  
 ---
 
 ## How It Works
