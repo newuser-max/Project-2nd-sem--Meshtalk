@@ -59,54 +59,12 @@ Window {
                 width: 300
 
                 // Logo icon
-                Rectangle {
+                Image {
                     width: 80
                     height: 80
-                    radius: 20
-                    color: "#111827"
-                    border.color: "#00D4FF"
-                    border.width: 1
                     anchors.horizontalCenter: parent.horizontalCenter
-
-                    Item {
-                        anchors.centerIn: parent
-                        width: 44
-                        height: 40
-
-                        Rectangle {
-                            width: 44
-                            height: 32
-                            radius: 10
-                            color: "#00D4FF"
-                            anchors.top: parent.top
-                        }
-
-                        Rectangle {
-                            width: 12
-                            height: 12
-                            radius: 3
-                            color: "#00D4FF"
-                            anchors.bottom: parent.bottom
-                            anchors.left: parent.left
-                            anchors.leftMargin: 6
-                        }
-
-                        Row {
-                            anchors.centerIn: parent
-                            anchors.verticalCenterOffset: -4
-                            spacing: 5
-
-                            Repeater {
-                                model: 3
-                                Rectangle {
-                                    width: 5
-                                    height: 5
-                                    radius: 3
-                                    color: "#0A0F1E"
-                                }
-                            }
-                        }
-                    }
+                    source: "images/chat.png"
+                    fillMode: Image.PreserveAspectFit
                 }
 
                 Item { height: 24; width: 1 }
@@ -582,10 +540,12 @@ Window {
                                                 width: 28; height: 28; radius: 8
                                                 color: "#00D4FF"
 
-                                                Text {
-                                                    anchors.centerIn: parent
-                                                    text: "📢"
-                                                    font.pixelSize: 14
+                                                Image {
+                                                    width: 28
+                                                    height: 28
+                                                    anchors.horizontalCenter: parent.horizontalCenter
+                                                    source: "images/megaphone.png"
+                                                    fillMode: Image.PreserveAspectFit
                                                 }
                                             }
 
@@ -878,10 +838,12 @@ Window {
                         anchors.centerIn: parent
                         spacing: 14
 
-                        Text {
-                            text: "🔍"
-                            font.pixelSize: 48
+                        Image {
+                            width: 80
+                            height: 80
                             anchors.horizontalCenter: parent.horizontalCenter
+                            source: "images/smiley.png"
+                            fillMode: Image.PreserveAspectFit
                         }
 
                         Text {
