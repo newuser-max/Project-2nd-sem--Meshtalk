@@ -24,6 +24,10 @@ Window {
     StackView {
         id: stack
         anchors.fill: parent
+        anchors.topMargin: SafeArea.margins.top
+        anchors.bottomMargin: SafeArea.margins.bottom
+        anchors.leftMargin: SafeArea.margins.left
+        anchors.rightMargin: SafeArea.margins.right
         initialItem: nicknameScreen
 
         pushEnter: Transition {
@@ -200,6 +204,19 @@ Window {
                 running: true
                 repeat: true
                 onTriggered: backend.checkInbox()
+            }
+
+            // Periodically re-announce presence and drop peers we haven't
+            // heard from in a while, so the online list stays accurate.
+            Timer {
+                interval: 5000
+                running: true
+                repeat: true
+                triggeredOnStart: true
+                onTriggered: {
+                    backend.broadcastPresence()
+                    backend.pruneStalePeers()
+                }
             }
 
             Connections {
